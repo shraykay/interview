@@ -57,22 +57,24 @@ class list_sorting(object):
                 """
 
                 if char == " " or char == '\n' or (not char):
-                    if string_builder[0] == '-':
-                        negative_sign = True
-                    else:
-                        negative_sign = False
-
-                    string_builder = re.sub(r'[^a-zA-Z0-9]', '',
+                    """ Replace everything but the '-' and alphanumericals
+                    Then, replace any dashes that are not in the 0th spot.
+                    If this is an edge case of a string, replace the first
+                    dash as well. Then, pass to dictionary, reset the word
+                    and move onto reading the next character.
+                    """
+                    string_builder = re.sub('[^-a-zA-Z0-9]', '',
                                             string_builder)
+
+                    string_builder = string_builder[0] + string_builder[1:].replace("-", "")
+
+                    if string_builder[1:].isalpha() and string_builder[0] == '-':
+                        string_builder = string_builder[1:]
 
                     if string_builder.isalpha():
                         self.words[word_count] = string_builder
-                    elif string_builder.isdigit():
-                        if negative_sign:
-                            string_builder = '-' + string_builder
-                        self.numbers[word_count] = int(string_builder)
                     else:
-                        print "Foreign Characters Detected!"
+                        self.numbers[word_count] = int(string_builder)
 
                     string_builder = ""
                     word_count += 1
