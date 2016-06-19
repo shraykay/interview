@@ -18,3 +18,6 @@ class Solution(object):
                 newRange.append(s)
         
         return newRange
+
+# This is for merging time slots (2,3) (3,4) (4,5)
+# Should merge into one tuple: (2,5)
